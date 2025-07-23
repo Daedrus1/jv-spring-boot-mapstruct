@@ -1,5 +1,7 @@
 package mate.academy.mapstruct.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import mate.academy.mapstruct.dto.student.CreateStudentRequestDto;
 import mate.academy.mapstruct.dto.student.StudentDto;
 import mate.academy.mapstruct.dto.student.StudentWithoutSubjectsDto;
@@ -8,9 +10,6 @@ import mate.academy.mapstruct.model.Student;
 import mate.academy.mapstruct.model.Subject;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
@@ -33,6 +32,10 @@ public interface StudentMapper {
         return subject == null ? null : subject.getId();
     }
 
+    default Long map(Group group) {
+        return group == null ? null : group.getId();
+    }
+
     default Subject mapSubject(Long id) {
         if (id == null) {
             return null;
@@ -40,10 +43,6 @@ public interface StudentMapper {
         Subject subject = new Subject();
         subject.setId(id);
         return subject;
-    }
-
-    default Long map(Group group) {
-        return group == null ? null : group.getId();
     }
 
     default Group mapGroup(Long id) {
